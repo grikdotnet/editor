@@ -1,0 +1,251 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Responsive Chat Interface</title>
+  <style>
+body, html {
+  margin: 0;
+  padding: 0;
+  font-family: Arial, sans-serif;
+}
+
+.container {
+  display: flex;
+  height: 100vh;
+}
+
+.menu {
+  background-color: #333;
+  color: white;
+  width: 250px;
+  transition: transform 0.3s ease;
+}
+
+.menu-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 1rem;
+}
+
+.menu ul {
+  list-style-type: none;
+  padding: 0;
+}
+
+.menu ul li {
+  padding: 1rem;
+}
+
+.menu ul li a {
+  color: white;
+  text-decoration: none;
+}
+
+.content {
+  flex-grow: 1;
+  display: flex;
+  flex-direction: column;
+}
+
+.header {
+  background-color: #f1f1f1;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 1rem;
+}
+
+.hamburger {
+  background: none;
+  border: none;
+  font-size: 1.5rem;
+  cursor: pointer;
+}
+
+.chat {
+  flex-grow: 1;
+  padding: 1rem;
+  background-color: #e9e9e9;
+  overflow-y: auto;
+}
+
+.message {
+  background-color: #fff;
+  padding: 0.5rem 1rem;
+  margin: 0.5rem 0;
+  border-radius: 20px;
+  max-width: 60%;
+}
+
+.input-box {
+  display: flex;
+  padding: 1rem;
+  background-color: #f1f1f1;
+}
+
+.input-box input {
+  flex-grow: 1;
+  padding: 0.5rem;
+  border: 1px solid #ccc;
+  border-radius: 20px;
+  margin-right: 0.5rem;
+}
+
+.input-box button {
+  padding: 0.5rem 1rem;
+  border: none;
+  background-color: #333;
+  color: white;
+  border-radius: 20px;
+  cursor: pointer;
+}
+
+  @media (max-width: 768px) {
+  .menu {
+    position: fixed;
+    top: 0;
+    left: 0;
+    height: 100%;
+    transform: translateX(-100%);
+  }
+
+  .menu.open {
+    transform: translateX(0);
+  }
+
+  .hamburger {
+    display: flex;
+  }
+
+  .close-btn {
+    display: block;
+    background: none;
+    border: none;
+    font-size: 1.5rem;
+    color: white;
+    cursor: pointer;
+  }
+}
+
+@media (min-width: 769px) {
+  .hamburger {
+    display: none;
+  }
+
+  .close-btn {
+    display: none;
+  }
+}
+
+
+.context-menu {
+  position: absolute;
+  background-color: #fff;
+  border: 1px solid #ccc;
+  padding: 0.5rem;
+  z-index: 1;
+}
+
+.context-menu ul {
+  list-style-type: none;
+  margin: 0;
+  padding: 0;
+}
+
+.context-menu li {
+  padding: 0.5rem;
+  cursor: pointer;
+}
+
+.context-menu li:hover {
+  background-color: #f1f1f1;
+}
+
+</style>
+</head>
+<body>
+  <div class="container">
+    <button class="hamburger" id="hamburger">&#9776;</button>
+    <div class="menu" id="menu">
+      <div class="menu-header">
+        <h2>Menu</h2>
+        <button class="close-btn" id="closeBtn">&times;</button>
+      </div>
+      <ul>
+        <li><a href="#">Chat 1</a></li>
+      </ul>
+    </div>
+    <div class="content">
+        <div class="chat">
+        <div class="message">Hello!</div>
+        <div class="message">How are you?</div>
+        <div class="context-menu" id="contextMenu" style="display: none;">
+            <ul>
+            <li>Copy</li>
+            <li>Cut</li>
+            <li>Paste</li>
+            </ul>
+        </div>
+        </div>
+      <div class="input-box">
+        <input type="text" placeholder="Type a message">
+        <button>Send</button>
+      </div>
+    </div>
+  </div>
+
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+  const menu = document.getElementById('menu');
+  const hamburger = document.getElementById('hamburger');
+  const closeBtn = document.getElementById('closeBtn');
+
+  hamburger.addEventListener('click', function() {
+    menu.classList.add('open');
+  });
+
+  closeBtn.addEventListener('click', function() {
+    menu.classList.remove('open');
+  });
+  
+  document.addEventListener('contextmenu', function(e) {
+    e.preventDefault();
+
+    const clickX = e.clientX;
+    const clickY = e.clientY;
+    const windowWidth = window.innerWidth;
+    const windowHeight = window.innerHeight;
+
+    const menuWidth = contextMenu.offsetWidth;
+    const menuHeight = contextMenu.offsetHeight;
+
+    let positionX = clickX;
+    let positionY = clickY;
+
+    // Adjust position to keep the menu within the viewport
+    if (positionX + menuWidth > windowWidth) {
+      positionX = windowWidth - menuWidth;
+    }
+
+    if (positionY + menuHeight > windowHeight) {
+      positionY = windowHeight - menuHeight;
+    }
+
+    contextMenu.style.left = `${positionX}px`;
+    contextMenu.style.top = `${positionY}px`;
+    contextMenu.style.display = 'block';
+  });
+
+
+  document.addEventListener('click', function(e) {
+    if (!e.target.closest('.context-menu')) {
+      contextMenu.style.display = 'none';
+    }
+  });
+});
+</script>
+</body>
+</html>

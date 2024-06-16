@@ -20,9 +20,6 @@
 
 <style scoped>
 .storage {
-  position: fixed;
-  top: 0;
-  left: 0;
   height: 100%;
   background-color: #333;
   color: white;
@@ -48,10 +45,10 @@
 }
 @media (max-width: 768px) {
   .storage {
-    transform: translateX(-100%);
+    display: none;
   }
   .storage.open {
-    transform: translateX(0);
+    display: block;
   }
   .close-btn {
     display: block;

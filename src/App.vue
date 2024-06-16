@@ -1,11 +1,15 @@
 <template>
   <div class="container">
     <header>
-    <button class="hamburger" id="hamburger" @click="openStorage">&#9776;</button>
-    <span>Text Editor</span>
+      <button class="hamburger" id="hamburger" @click="openStorage">&#9776;</button>
+      <span>Text Editor</span>
     </header>
-    <Storage :isOpen="isStorageOpen" @close-storage="closeStorage"/>
-    <Editor/>
+    <main>
+      <Storage :isOpen="isStorageOpen" @close-storage="closeStorage"/>
+      <div>
+      <Editor />
+    </div>
+    </main>
   </div>
 </template>
 
@@ -24,12 +28,22 @@ import Editor from './components/Editor.vue';
 </script>
 
 <style>
+  .container {
+    display: flex;
+    flex-direction: column;
+    height: 100vh;
+  }
+  main {
+    display: -webkit-flex;
+    display: flex;
+    height: 100%;
+  }
   header {
     display: flex;
     background-color: #e9e9e9;
     height: 30px;
     width: 100%;
-   }
+  }
   .hamburger {
     background: none;
     border: none;
@@ -50,9 +64,4 @@ import Editor from './components/Editor.vue';
       display: flex;
     }
   }
-.container {
-  display: flex;
-  flex-direction: column;
-  height: 100vh;
-}
 </style>
